@@ -77,4 +77,28 @@ $app->post('/city', function(\Slim\Http\Request $request, \Slim\Http\Response $r
   }
 });
 
+$app->put('/city', function(\Slim\Http\Request $request, \Slim\Http\Response $response) use($app) {
+  header("Access-Control-Allow-Origin: *");
+  $requestData = $request->getParsedBody();
+  $city = ORM::for_table('city')->find_one($requestData['id']);
+
+  $city->id = $requestData['id'];
+  $city->name = $requestData['name'];
+  $city->country_code = $requestData['country_code'];
+  $city->population = $requestData['population'];
+  $city->img = $requestData['img'];
+
+  if($city->save()){
+      echo json_encode( [
+          'code' => 0,
+          'message' => 'Data was successfully updated'
+      ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  } else {
+      echo json_encode( [
+          'code' => 3,
+          'message' => 'Data was error'
+      ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  }
+});
+
 $app->run();
