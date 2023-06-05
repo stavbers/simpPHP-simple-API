@@ -52,4 +52,29 @@ echo json_encode ([
 }
 });
 
+$app->post('/city', function(\Slim\Http\Request $request, \Slim\Http\Response $response) use($app){
+  header('Content-Type: application/json');
+  header("Access-Control-Allow-Origin: *");
+  $requestData = $request->getParsedBody();
+  $city = ORM::for_table('city')->create();
+
+  $city->id = $requestData['id'];
+  $city->name = $requestData['name'];
+  $city->country_code = $requestData['country_code'];
+  $city->population = $requestData['population'];
+  $city->img = $requestData['img'];
+
+  if($city->save()){
+      echo json_encode( [
+          'code' => 0,
+          'message' => 'Data add succes'
+      ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  } else {
+      echo json_encode( [
+          'code' => 2,
+          'message' => 'Data error'
+      ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  }
+});
+
 $app->run();
