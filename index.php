@@ -101,4 +101,30 @@ $app->put('/city', function(\Slim\Http\Request $request, \Slim\Http\Response $re
   }
 });
 
+$app->delete('/city', function(\Slim\Http\Request $request, \Slim\Http\Response $response) use($app) {
+  header("Access-Control-Allow-Origin: *");
+  $requestData = $request->getParsedBody();
+  $city = ORM::for_table('city')->find_one($requestData['id']);
+
+  if($city) {
+      if($city->delete()){
+          echo json_encode( [
+              'code' => 0,
+              'message' => 'Data was delete'
+          ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+      } else {
+          echo json_encode( [
+              'code' => 4,
+              'message' => 'Data was error'
+          ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+      }
+  }else {
+      echo json_encode( [
+          'code' => 1,
+          'message' => 'Data not search or was deleted'
+      ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+  }
+
+});
+
 $app->run();
