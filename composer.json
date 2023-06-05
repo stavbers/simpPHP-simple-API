@@ -1,0 +1,18 @@
+{
+  "name": "stavbers/apislimonlyget",
+  "type": "slim",
+  "autoload": {
+      "psr-4": {
+          "stavbers\\apiSlimOnlyGet\\": "src/"
+      }
+  },
+  "authors": [
+      {
+          "name": "stavbers"
+      }
+  ],
+  "require": {
+      "slim/slim": "3.*",
+      "j4mie/idiorm": "1.5.1"
+  }
+}
