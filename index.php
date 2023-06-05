@@ -19,5 +19,11 @@ $app->get('/', function () {
   echo 'go page /city';
 });
 
+$app->get('/city', function () {
+  header('Content-Type: application/json;charset=utf-8');
+  header("Access-Control-Allow-Origin: *");
+  $name = ORM::for_table('city')->find_array();
+  echo json_encode($name, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+});
 
 $app->run();
